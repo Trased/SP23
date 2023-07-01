@@ -34,8 +34,6 @@ begin
 end
 initial
 begin
-  	$dumpfile("dump.vcd");
-    $dumpvars(1);
     #0  Opcode <= 2'b00;
         Din <= 32'h0000;
         Reset <= 1'b1;
