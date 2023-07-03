@@ -1,4 +1,4 @@
-module Controller(
+module DecInputKey(
 input [4:0] InputKey,
 input ValidCmd,
 input Reset,
