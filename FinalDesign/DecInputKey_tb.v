@@ -1,4 +1,4 @@
-module Controller_TB;
+module DecInputKey_TB;
 
 reg [4:0] InputKey;
 reg ValidCmd;
@@ -7,7 +7,7 @@ reg Clk;
 wire Active;
 wire Mode;
 
-Controller dut (
+DecInputKey dut (
     .InputKey(InputKey),
     .ValidCmd(ValidCmd),
     .Reset(Reset),
