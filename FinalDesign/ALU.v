@@ -28,8 +28,8 @@ begin
                 Flag[3:3] <= 1'b1;
             Out <= A/B;
             end        
-        4'h4: Out <= A<<B;
-        4'h5: Out <= A>>B;
+        4'h4: {Flag[1:1], Out} <= A<<B;
+        4'h5: {Out, Flag[1:1]} <= A>>B;
         4'h6: Out <= A & B; // Bitwise AND or not?
         4'h7: Out <= A | B; // Bitwise OR or not?
         4'h8: Out <= A ^ B;
