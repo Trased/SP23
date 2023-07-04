@@ -3,21 +3,32 @@ input [31:0] Din,
 input ConfigDiv, Reset, Clk, Enable,
 output reg ClkOut);
 
-reg [32:0] ConfigReg;
-
+reg [31:0] T;
+reg [31:0] counter;
 always@(posedge Clk or posedge Reset)
+begin
     if(Reset)
+    begin
+        ClkOut <= 1'b0;
+    end
+    else
+    begin
+        if(!Enable)
         begin
-            ConfigReg <= 33'b0;
             ClkOut <= 1'b0;
-        end 
-    else if(!Enable)
+            if(ConfigDiv)
+                T <= Din;
+        end
+        else
         begin
-            ClkOut <= 1'b0;
-            if(!ConfigDiv)
-                begin
-                    ClkOut <= ConfigReg[0:0] * Clk; // daca ConfigDiv == 0, folosesc ConfigReg[0:0], altfel asignez in ConfigReg valoarea la Din;
-                end
-        end   
+           if(counter < (T/2)) // TO FIX : DIV 1 , DIV 5 .. cmon...
+                counter = counter + 1;
+           else
+                counter = 0;
+                ClkOut <= ~ClkOut; 
+        end
+    end
+      
+end
 
 endmodule
