@@ -22,14 +22,17 @@ begin
             end 
            Dout <= {DinLength{1'bX}};
         end
-    else if (R_W == 1'b0)
+    else if(Valid) 
+    begin
+        if (R_W == 1'b0)
         begin
             Dout <= Mem[Addr];
         end
-    else if(R_W == 1'b1)
+        else if(R_W == 1'b1)
         begin
             Mem[Addr] <= Din;
-        end  
+        end 
+    end
 end
 
 
