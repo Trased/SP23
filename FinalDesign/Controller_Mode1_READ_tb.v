@@ -24,7 +24,7 @@ end
 
 initial
 begin
-    #0
+       #0
         Mode <= 1'b0;
         Active <= 1'b0;
         RW <= 1'b0;
@@ -39,9 +39,9 @@ begin
         Active <= 1'b1;
    #10
         ValidCmd <= 1'b0; 
-   #165
+   #162
         TxDone <= 1'b1;
-   #20
+   #15
         TxDone <= 1'b0;
    #95
         Mode <= 1'b0;
