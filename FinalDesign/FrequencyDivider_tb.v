@@ -23,11 +23,11 @@ FrequencyDivider DUT(
 initial
 begin
     #0
-        Din <= 32'h00000002;
+        Din <= 32'h00000005;
         ConfigDiv <= 1'b0;
         Reset <= 1'b1;
         Enable <= 1'b0;
-    #10
+    #9
         ConfigDiv <= 1'b1;
         Reset <= 1'b0;
     #20
