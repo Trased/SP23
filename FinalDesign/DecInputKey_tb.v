@@ -1,6 +1,6 @@
 module DecInputKey_TB;
 
-reg [4:0] InputKey;
+reg InputKey;
 reg ValidCmd;
 reg Reset;
 reg Clk;
@@ -28,26 +28,46 @@ end
 initial
 begin
   #0
-    InputKey <= 5'b00000;
+    InputKey <= 1'b0;
     ValidCmd <= 1'b0;
     Reset <= 1'b1;
   #10
     Reset <= 1'b0;
-    InputKey <= 5'b10101;
+    InputKey <= 5'b1;
     ValidCmd <= 1'b1;
-  #50
+  #10
+    InputKey <= 1'b0;
+  #10
+    InputKey <= 1'b1;
+  #10
+    InputKey <= 1'b0;
+  #10
+    InputKey <= 1'b1;
+  #10
     ValidCmd <= 1'b0;
-  #2
+  #22
     Reset <= 1'b1;
   #8
     Reset <= 1'b0;
     ValidCmd <= 1'b1;
-    InputKey <= 5'b00001;
-  #50
-    InputKey <= 5'b00101;
-  #30
-    InputKey <= 5'b10000;
+    InputKey <= 1'b0;
   #10
+    InputKey <= 1'b1;
+  #10
+    InputKey <= 1'b1;
+  #10
+    InputKey <= 1'b0;
+  #10
+    InputKey <= 1'b1;
+  #10
+    InputKey <= 1'b0;
+  #10
+    InputKey <= 1'b1;
+  #10
+    InputKey <= 1'b0;
+  #10
+    InputKey <= 1'b1;
+  #30
     $finish;
 end
 
