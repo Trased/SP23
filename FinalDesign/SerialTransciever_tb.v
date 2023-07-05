@@ -4,7 +4,7 @@ reg Sample, StartTx, Reset, Clk, ClkTx;
 wire TxDone, TxBusy;
 wire Dout;
 
-SerialTransciever #(1) DUT(
+SerialTransciever #(32) DUT(
                     .DataIn(DataIn),
                     .Sample(Sample),
                     .StartTx(StartTx),
@@ -16,7 +16,9 @@ SerialTransciever #(1) DUT(
                     .Dout(Dout));
  
 wire [31:0] data;
+wire [4:0] counter;
 assign data = DUT.data;
+assign counter = DUT.cnt;
  
                     
 initial
