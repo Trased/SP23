@@ -1,5 +1,5 @@
 module DecInputKey(
-input [4:0] InputKey,
+input InputKey,
 input ValidCmd,
 input Reset,
 input Clk,
@@ -27,16 +27,16 @@ begin
             begin
                 if(!CorrectInput)
                     casex({InputKey, cs})
-                        7'bxxxx1_00: ns <= 2'b01;
-                        7'bxxx0x_01: ns <= 2'b10;
-                        7'bxx1xx_10: ns <= 2'b11;
-                        7'bx0xxx_11: CorrectInput <= 1'b1; // De ce in model se testeaza 10101 in loc de doar 1010 ?? 
+                        7'b1_00: ns <= 2'b01;
+                        7'b0_01: ns <= 2'b10;
+                        7'b1_10: ns <= 2'b11;
+                        7'b0_11: CorrectInput <= 1'b1;
                         default: ns<= 2'b00;
                     endcase
                 else
                 begin
                     Active <=1'b1;
-                    Mode <= InputKey[4:4];
+                    Mode <= InputKey;
                 end 
             end
     end
