@@ -29,6 +29,7 @@ end
 
 initial
 begin
+    begin
     #0
         Mode <= 1'b0;
         Active <= 1'b1;
@@ -38,12 +39,17 @@ begin
         ValidCmd <= 1'b0;  
     #5
         Reset <= 1'b0; 
-    #20
+    #17
         ValidCmd <= 1'b1;
     #10
         ValidCmd <= 1'b0;
-    #100
+    #30
+        TxDone <= 1'b1;
+    #15
+        TxDone <= 1'b0;
+    #20
         $finish; 
+end
 end
 
 endmodule
