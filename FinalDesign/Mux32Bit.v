@@ -1,8 +1,8 @@
-module Mux32Bit(
-input [31:0] A,
-input [31:0] B,
+module Mux32Bit#(parameter WIDTH = 32)(
+input [WIDTH-1:0] A,
+input [WIDTH-1:0] B,
 input Sel,
-output reg [31:0] Out);
+output reg [WIDTH-1:0] Out);
 
 always@(*)
     if(Sel)

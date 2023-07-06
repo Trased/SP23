@@ -37,12 +37,14 @@ begin
             Dout <= data[WIDTH-1:WIDTH-1];
             data <= data << 1;
             cnt <= cnt + 1'b1; 
+            TxDone <= 1'b0;
         end
         else
         begin
             Dout <= {WIDTH{1'b0}};
             TxDone <= 1'b1;
             TxBusy <= 1'b0;
+            cnt <= 0;
         end
     end
 end

@@ -8,7 +8,7 @@ output CalcActive, CalcMode, Busy, DOutValid, DataOut, ClkTx);
 wire [31:0] ConcatOutTmp, MemDout, TxDinTmp;
 wire [7:0] MuxInATmp, MuxInBTmp, AluOutTmp; 
 wire [3:0] MuxSelTmp, AluFlagTmp;
-wire SampleData, StartTx, CtrlTransferDataTmp, ClkTmp, Active, CtrlRWMemTmp, CtrlAccessMemTmp, CtrlModeTmp;
+wire SampleData, CtrlTransferDataTmp, ClkTmp, Active, CtrlRWMemTmp, CtrlAccessMemTmp, CtrlModeTmp;
 reg ResetTmp, RWTmp;
 
 
@@ -36,17 +36,17 @@ Mux8Bit #(4) MuxSel_DUT(Sel, ResetTmp, MuxSelTmp);
 
 ALU ALU_DUT(MuxInATmp, MuxInBTmp, MuxSelTmp, AluOutTmp, AluFlagTmp);
 
-DecInputKey InputKey_DUT(InputKey, ValidCmd, ResetTmp, Clk, Active, CtrlModeTmp);
+DecInputKey InputKey_DUT(InputKey, ValidCmd, Reset, Clk, Active, CtrlModeTmp);
 
-RW_flow Controller_DUT(Active, CtrlMode, ValidCmd, RWTmp, ResetTmp, Clk, CtrlTransferDataTmp, CtrlAccessMemTmp, CtrlRWMemTmp, SampleData, TxData, Busy);
+RW_flow Controller_DUT(Active, CtrlModeTmp, ValidCmd, RWTmp, Reset, Clk, CtrlTransferDataTmp, CtrlAccessMemTmp, CtrlRWMemTmp, SampleData, TxData, Busy);
 
 Concatenator Concatenator_DUT(MuxInATmp, MuxInBTmp, AluOutTmp, MuxSelTmp, AluFlagTmp, ConcatOutTmp);
 
-Memory #(8, 32) Memory_DUT(DIn, Addr, CtrlRWMemTmp, CtrlAccessMemTmp, ResetTmp, Clk, MemDout);
+Memory #(8, 32) Memory_DUT(ConcatOutTmp, Addr, CtrlRWMemTmp, CtrlAccessMemTmp, ResetTmp, Clk, MemDout);
 
 Mux32Bit #(32) Mux32Bit_DUT(ConcatOutTmp, MemDout,CtrlModeTmp, TxDinTmp);
 
-SerialTransciever #(32) SerialTransciever_DUT(TxDinTmp, SampleData, StartTx, ResetTmp, Clk, ClkTmp, CtrlTransferDataTmp, DoutValid, DataOut);
+SerialTransciever #(32) SerialTransciever_DUT(TxDinTmp, SampleData, TxData, ResetTmp, Clk, ClkTmp, CtrlTransferDataTmp, DOutValid, DataOut);
 
 FrequencyDivider FrequencyDivider_DUT(DIn, ConfigDiv, ResetTmp, Clk, Active, ClkTmp);
 

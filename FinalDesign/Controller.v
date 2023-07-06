@@ -4,7 +4,7 @@ output reg AccessMem, RWMem, SampleData, TxData, Busy);
 
 reg [1:0] cs = 2'b00, ns;
 reg [1:0] rwFlag = 2'b00;
-
+reg rwen;
 always@(cs or ns)
     cs <= ns;
 
@@ -24,15 +24,15 @@ begin
         begin
             rwFlag <= 2'b01;
             casex({cs, ValidCmd, Active, Mode, RW, TxDone})
-              7'b00_1_1_1_0_x: {ns, AccessMem, RWMem, Busy} <= 5'b01_1_0_1;
-              7'b00_1_1_1_1_x: {ns, AccessMem, RWMem, TxData, Busy} <= 6'b11_1_1_1_1;
+              7'b00_1_1_1_0_x: {ns, AccessMem, RWMem, Busy, rwen} <= 6'b01_1_0_1_1;
+              7'b00_1_1_1_1_x: {ns, AccessMem, RWMem, TxData, Busy,rwen} <= 7'b11_1_1_1_1_0;
               7'b01_x_1_1_x_0: {ns,SampleData, AccessMem} <= 4'b10_1_0;
               7'b10_x_1_x_x_0: {ns,TxData,SampleData} <= 4'b11_1_0;
-              7'b11_x_1_x_x_x: if (TxDone) begin {ns, Busy,TxData, AccessMem, RWMem} <= 6'b00_0_0_0_0; end
+              7'b11_x_1_x_x_x: if ((TxDone && rwen) || (!RW && !rwen))begin {ns, Busy,TxData, AccessMem, RWMem} <= 6'b00_0_0_0_0; end
               default: {ns, AccessMem, RWMem, SampleData, TxData, Busy, rwFlag} <= 9'b00_0_0_0_0_0_00;
             endcase
         end
-   else if (Mode == 1'b0 && rwFlag != 2'b01)
+   else if (Mode == 1'b0 && (rwFlag != 2'b01))
        begin
             rwFlag <= 2'b10;
             casex({cs, ValidCmd, Active, Mode,TxDone})
