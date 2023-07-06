@@ -28,7 +28,7 @@ begin
               7'b00_1_1_1_1_x: {ns, AccessMem, RWMem, TxData, Busy,rwen} <= 7'b11_1_1_1_1_0;
               7'b01_x_1_1_x_0: {ns,SampleData, AccessMem} <= 4'b10_1_0;
               7'b10_x_1_x_x_0: {ns,TxData,SampleData} <= 4'b11_1_0;
-              7'b11_x_1_x_x_x: if ((TxDone && rwen) || (!RW && !rwen))begin {ns, Busy,TxData, AccessMem, RWMem} <= 6'b00_0_0_0_0; end
+              7'b11_x_1_x_x_x: begin TxData <= 1'b0; if ((TxDone && rwen) || (!RW && !rwen))begin {ns, Busy,TxData, AccessMem, RWMem} <= 6'b00_0_0_0_0; end end
               default: {ns, AccessMem, RWMem, SampleData, TxData, Busy, rwFlag} <= 9'b00_0_0_0_0_0_00;
             endcase
         end
@@ -38,7 +38,7 @@ begin
             casex({cs, ValidCmd, Active, Mode,TxDone})
               6'b00_1_1_0_x: {ns, SampleData, Busy} <= 4'b01_1_1;
               6'b01_x_1_0_0: {ns, SampleData, TxData} <= 4'b10_0_1;
-              6'b10_x_1_x_x: if(TxDone) begin {ns, Busy,TxData} <= 4'b00_0_0;  end           
+              6'b10_x_1_x_x: begin TxData <= 1'b0; if(TxDone) begin {ns, Busy} <= 4'b00_0;  end end          
               default: {AccessMem, RWMem, Busy, rwFlag} <= 7'b00_0_0_0_00;
             endcase
        end

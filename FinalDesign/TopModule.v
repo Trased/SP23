@@ -36,7 +36,7 @@ Mux8Bit #(4) MuxSel_DUT(Sel, ResetTmp, MuxSelTmp);
 
 ALU ALU_DUT(MuxInATmp, MuxInBTmp, MuxSelTmp, AluOutTmp, AluFlagTmp);
 
-DecInputKey InputKey_DUT(InputKey, ValidCmd, Reset, Clk, Active, CtrlModeTmp);
+DecInputKey InputKey_DUT(InputKey, ValidCmd, Reset, Clk, Busy, Active, CtrlModeTmp);
 
 RW_flow Controller_DUT(Active, CtrlModeTmp, ValidCmd, RWTmp, Reset, Clk, CtrlTransferDataTmp, CtrlAccessMemTmp, CtrlRWMemTmp, SampleData, TxData, Busy);
 

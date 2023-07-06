@@ -3,6 +3,7 @@ input InputKey,
 input ValidCmd,
 input Reset,
 input Clk,
+input Busy,
 output reg Active,
 output reg Mode);
 
@@ -33,12 +34,12 @@ begin
                         7'b0_11: CorrectInput <= 1'b1;
                         default: ns<= 2'b00;
                     endcase
-                else
-                begin
-                    Active <=1'b1;
-                    Mode <= InputKey;
-                end 
             end
+        if(CorrectInput && !Busy)
+        begin
+            Active <=1'b1;
+            Mode <= InputKey;
+        end
     end
 end
 
