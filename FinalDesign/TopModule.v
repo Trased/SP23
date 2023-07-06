@@ -14,7 +14,7 @@ reg ResetTmp, RWTmp;
 
 always@(*)
 begin
-    if(!Active || Reset)
+    if(!Active && Reset)
         ResetTmp <= 1'b1;
     else
         ResetTmp <= 1'b0;
