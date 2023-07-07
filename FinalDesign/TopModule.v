@@ -3,7 +3,8 @@ input InputKey, ValidCmd, RWMem, ConfigDiv, Reset, Clk,
 input[7:0] Addr, InA, InB,
 input[3:0] Sel,
 input[31:0] DIn,
-output CalcActive, CalcMode, Busy, DOutValid, DataOut, ClkTx);
+output CalcActive, CalcMode, Busy, DOutValid, ClkTx,
+output [3:0] DataOut);
 
 wire [31:0] ConcatOutTmp, MemDout, TxDinTmp;
 wire [7:0] MuxInATmp, MuxInBTmp, AluOutTmp; 
@@ -46,7 +47,7 @@ Memory #(8, 32) Memory_DUT(ConcatOutTmp, Addr, CtrlRWMemTmp, CtrlAccessMemTmp, R
 
 Mux32Bit #(32) Mux32Bit_DUT(ConcatOutTmp, MemDout,CtrlModeTmp, TxDinTmp);
 
-SerialTransciever #(32) SerialTransciever_DUT(TxDinTmp, SampleData, TxData, ResetTmp, Clk, ClkTmp, CtrlTransferDataTmp, DOutValid, DataOut);
+SerialTransciever #(4) SerialTransciever_DUT(TxDinTmp, SampleData, TxData, ResetTmp, Clk, ClkTmp, CtrlTransferDataTmp, DOutValid, DataOut);
 
 FrequencyDivider FrequencyDivider_DUT(DIn, ConfigDiv, ResetTmp, Clk, Active, ClkTmp);
 

@@ -3,7 +3,8 @@ reg InputKey, ValidCmd, RWMem, ConfigDiv, Reset, Clk;
 reg[7:0] Addr, InA, InB;
 reg[3:0] Sel;
 reg[31:0] Din;
-wire CalcActive, CalcMode, Busy, DOutValid, DataOut, ClkTx;
+wire CalcActive, CalcMode, Busy, DOutValid, ClkTx;
+wire [3:0] DataOut;
 
 TopModule Top_DUT(
         .InputKey(InputKey),
@@ -81,58 +82,59 @@ TopModule Top_DUT(
 //assign MUXMSEL = Top_DUT.Mux32Bit_DUT.Sel;
 
 // SERIAL TRANSCIEVER
-// wire[31:0] STDIN, STDATA;
-// wire STSAMPLE, STSTARTTX, STRESET, STCLK, STCLKTX, STTXDONE, STTXBUSY, STDOUT;
-// assign STDIN = Top_DUT.SerialTransciever_DUT.DataIn;
-// assign STSAMPLE = Top_DUT.SerialTransciever_DUT.Sample;
-// assign STSTARTTX = Top_DUT.SerialTransciever_DUT.StartTx;
-// assign STRESET = Top_DUT.SerialTransciever_DUT.Reset;
-// assign STCLK = Top_DUT.SerialTransciever_DUT.Clk;
-// assign STCLKTX = Top_DUT.SerialTransciever_DUT.ClkTx;
-// assign STTXDONE = Top_DUT.SerialTransciever_DUT.TxDone;
-// assign STTXBUSY = Top_DUT.SerialTransciever_DUT.TxBusy;
-// assign STDOUT = Top_DUT.SerialTransciever_DUT.Dout;
-// assign STDATA = Top_DUT.SerialTransciever_DUT.data;
-// assign STTXSTART = Top_DUT.SerialTransciever_DUT.TxStart;
+//wire[31:0] STDIN, STDATA;
+//wire STSAMPLE, STSTARTTX, STRESET, STCLK, STCLKTX, STTXDONE, STTXBUSY; 
+//wire [3:0] STDOUT;
+//assign STDIN = Top_DUT.SerialTransciever_DUT.DataIn;
+//assign STSAMPLE = Top_DUT.SerialTransciever_DUT.Sample;
+//assign STSTARTTX = Top_DUT.SerialTransciever_DUT.StartTx;
+//assign STRESET = Top_DUT.SerialTransciever_DUT.Reset;
+//assign STCLK = Top_DUT.SerialTransciever_DUT.Clk;
+//assign STCLKTX = Top_DUT.SerialTransciever_DUT.ClkTx;
+//assign STTXDONE = Top_DUT.SerialTransciever_DUT.TxDone;
+//assign STTXBUSY = Top_DUT.SerialTransciever_DUT.TxBusy;
+//assign STDOUT = Top_DUT.SerialTransciever_DUT.Dout;
+//assign STDATA = Top_DUT.SerialTransciever_DUT.data;
+//assign STTXSTART = Top_DUT.SerialTransciever_DUT.TxStart;
 
 // MEMORY
-// wire[31:0] MEMDIN, MEMDOUT;
-// wire[7:0] MEMADDR;
-// wire MEMRW, MEMVALID, MEMRESET, MEMCLK;
-// assign MEMDIN = Top_DUT.Memory_DUT.Din;
-// assign MEMADDR = Top_DUT.Memory_DUT.Addr;
-// assign MEMRW = Top_DUT.Memory_DUT.R_W;
-// assign MEMVALID = Top_DUT.Memory_DUT.Valid;
-// assign MEMRESET = Top_DUT.Memory_DUT.Reset;
-// assign MEMCLK = Top_DUT.Memory_DUT.Clk;
-// assign MEMDOUT = Top_DUT.Memory_DUT.Dout;
+//wire[31:0] MEMDIN, MEMDOUT;
+//wire[7:0] MEMADDR;
+//wire MEMRW, MEMVALID, MEMRESET, MEMCLK;
+//assign MEMDIN = Top_DUT.Memory_DUT.Din;
+//assign MEMADDR = Top_DUT.Memory_DUT.Addr;
+//assign MEMRW = Top_DUT.Memory_DUT.R_W;
+//assign MEMVALID = Top_DUT.Memory_DUT.Valid;
+//assign MEMRESET = Top_DUT.Memory_DUT.Reset;
+//assign MEMCLK = Top_DUT.Memory_DUT.Clk;
+//assign MEMDOUT = Top_DUT.Memory_DUT.Dout;
 
-// //FIRST 5 ADDRESSES OF THE MEMORY
+////FIRST 5 ADDRESSES OF THE MEMORY
 
-// wire [31:0] MEMADDRESSES [0:4];
-// assign MEMADDRESSES[0] = Top_DUT.Memory_DUT.Mem[0];
-// assign MEMADDRESSES[1] = Top_DUT.Memory_DUT.Mem[1];
-// assign MEMADDRESSES[2] = Top_DUT.Memory_DUT.Mem[2];
-// assign MEMADDRESSES[3] = Top_DUT.Memory_DUT.Mem[3];
-// assign MEMADDRESSES[4] = Top_DUT.Memory_DUT.Mem[4];
+//wire [31:0] MEMADDRESSES [0:4];
+//assign MEMADDRESSES[0] = Top_DUT.Memory_DUT.Mem[0];
+//assign MEMADDRESSES[1] = Top_DUT.Memory_DUT.Mem[1];
+//assign MEMADDRESSES[2] = Top_DUT.Memory_DUT.Mem[2];
+//assign MEMADDRESSES[3] = Top_DUT.Memory_DUT.Mem[3];
+//assign MEMADDRESSES[4] = Top_DUT.Memory_DUT.Mem[4];
 
 // CONTROLLER
-// wire CONTACTIVE, CONTMODE, CONTVALID, CONTRW, CONTRESET, CONTCLK, CONTTXDONE, CONTACCESSMEM, CONTRWMEM, CONTSAMPLEDATA, CONTTXDATA, CONTBUSY;
-// wire [1:0] CONTSTATE, CONTNEXTSTATE;
-// assign CONTACTIVE = Top_DUT.Controller_DUT.Active;
-// assign CONTMODE = Top_DUT.Controller_DUT.Mode;
-// assign CONTVALID = Top_DUT.Controller_DUT.ValidCmd;
-// assign CONTRW = Top_DUT.Controller_DUT.RW;
-// assign CONTRESET = Top_DUT.Controller_DUT.Reset;
-// assign CONTCLK = Top_DUT.Controller_DUT.Clk;
-// assign CONTTXDONE = Top_DUT.Controller_DUT.TxDone;
-// assign CONTACCESSMEM = Top_DUT.Controller_DUT.AccessMem;
-// assign CONTRWMEM = Top_DUT.Controller_DUT.RWMem;
-// assign CONTSAMPLEDATA = Top_DUT.Controller_DUT.SampleData;
-// assign CONTTXDATA = Top_DUT.Controller_DUT.TxData;
-// assign CONTBUSY = Top_DUT.Controller_DUT.Busy;
-// assign CONTSTATE = Top_DUT.Controller_DUT.cs;
-// assign CONTNEXTSTATE = Top_DUT.Controller_DUT.ns;
+//wire CONTACTIVE, CONTMODE, CONTVALID, CONTRW, CONTRESET, CONTCLK, CONTTXDONE, CONTACCESSMEM, CONTRWMEM, CONTSAMPLEDATA, CONTTXDATA, CONTBUSY;
+//wire [1:0] CONTSTATE, CONTNEXTSTATE;
+//assign CONTACTIVE = Top_DUT.Controller_DUT.Active;
+//assign CONTMODE = Top_DUT.Controller_DUT.Mode;
+//assign CONTVALID = Top_DUT.Controller_DUT.ValidCmd;
+//assign CONTRW = Top_DUT.Controller_DUT.RW;
+//assign CONTRESET = Top_DUT.Controller_DUT.Reset;
+//assign CONTCLK = Top_DUT.Controller_DUT.Clk;
+//assign CONTTXDONE = Top_DUT.Controller_DUT.TxDone;
+//assign CONTACCESSMEM = Top_DUT.Controller_DUT.AccessMem;
+//assign CONTRWMEM = Top_DUT.Controller_DUT.RWMem;
+//assign CONTSAMPLEDATA = Top_DUT.Controller_DUT.SampleData;
+//assign CONTTXDATA = Top_DUT.Controller_DUT.TxData;
+//assign CONTBUSY = Top_DUT.Controller_DUT.Busy;
+//assign CONTSTATE = Top_DUT.Controller_DUT.cs;
+//assign CONTNEXTSTATE = Top_DUT.Controller_DUT.ns;
 //DEC INPUT KEY
 //assign DIKINPUTKEY = Top_DUT.InputKey_DUT.InputKey;
 //assign DIKVALIDCMD = Top_DUT.InputKey_DUT.ValidCmd;

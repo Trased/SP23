@@ -1,11 +1,11 @@
-module SerialTransciever #(parameter WIDTH = 32)(
-input [WIDTH-1:0] DataIn,
+module SerialTransciever #(parameter WIDTH = 4)(
+input [31:0] DataIn,
 input Sample, StartTx, Reset, Clk, ClkTx,
 output reg TxDone, TxBusy, 
-output reg Dout);
+output reg [WIDTH-1:0] Dout);
 
 reg TxStart;
-reg [WIDTH-1:0] data;
+reg [31:0] data;
 reg [5:0] cnt;
 always@(posedge Clk or posedge Reset)
 begin
@@ -13,7 +13,7 @@ begin
     begin
         TxDone <= 1'b0;
         TxBusy <= 1'b0;
-        Dout <= {WIDTH{1'b0}};
+        Dout <= {32{1'b0}};
         cnt <= 0;
     end
     if(Sample && !StartTx)
@@ -38,14 +38,15 @@ begin
     begin
         if(cnt < 32)
         begin
-            Dout <= data[WIDTH-1:WIDTH-1];
-            data <= {data[WIDTH-2:0], 1'bx};
-            cnt <= cnt + 1'b1; 
+            Dout <= data[31:32-WIDTH];
+            data <= {data[31-WIDTH:0], {WIDTH{1'b0}}};
+            cnt <= cnt + WIDTH; 
             TxDone <= 1'b0;
         end
         else
         begin
-            Dout <= {WIDTH{1'b0}};
+            data <= {31{1'bx}};
+            Dout <= {31{1'b0}};
             TxDone <= 1'b1;
             TxStart <= 1'b0;
             TxBusy <= 1'b0;
